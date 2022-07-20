@@ -2,7 +2,7 @@
   <div class="auth__layout">
     <full-page-loader v-if="loading" />
 
-    <b-container>
+    <b-container style="max-width: 600px;">
       <nuxt />
     </b-container>
   </div>
