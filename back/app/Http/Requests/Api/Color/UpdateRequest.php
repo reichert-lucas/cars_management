@@ -14,7 +14,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:255'
+            'name' => "required|string|min:3|max:255|unique:colors,name,{$this->color->id}"
         ];
     }
 }
