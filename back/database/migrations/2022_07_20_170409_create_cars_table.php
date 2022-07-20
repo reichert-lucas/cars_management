@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('model');
             $table->decimal('price', 8, 2);
             $table->string('fuel');
-            $table->string('banner');
+            $table->string('banner')->nullable();
 
             $table->bigInteger('color_id')->nullable();
             $table->foreign('color_id')->references('id')->on('colors');
