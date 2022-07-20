@@ -11,7 +11,7 @@
         :class="{'border border-danger': errors[0]}"
       >
 
-      <span v-if="errors[0]" class="error text-danger">{{ errors[0] }}</span>
+      <small v-if="errors[0]" class="error text-danger">{{ errors[0] }}</small>
     </div>
   </validation-provider>
 </template>
