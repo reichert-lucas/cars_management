@@ -1,13 +1,23 @@
 <template>
   <b-card
-    title="Login"
+    title="Registrar Usuário"
     class="p-5"
   >
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
       <form
-        @submit.prevent="handleSubmit(sendLogin)"
+        @submit.prevent="handleSubmit(callRegisterUser)"
         class="py-3"
       >
+        <div class="my-3">
+          <base-input-validate
+            :rules="{ min: 3, required: true }"
+            type="text"
+            name="nome"
+            placeholder="seu nome"
+            v-model="form.name"
+          />
+        </div>
+
         <div class="my-3">
           <base-input-validate
             :rules="{ email: true, required: true }"
@@ -29,11 +39,11 @@
         </div>
 
         <div class="d-flex justify-content-end mt-4">
-          <nuxt-link class="btn btn-secondary mr-2" :to="{ name: 'register' }">
-            Não tenho conta
+          <nuxt-link class="btn btn-secondary mr-2" :to="{ name: 'index' }">
+            Já tenho conta
           </nuxt-link>
           <button class="btn btn-warning ml-2 text-white" :disabled="loading" type="submit">
-            Entrar
+            Criar conta
           </button>
         </div>
       </form>
@@ -46,34 +56,34 @@ import { mapActions } from 'vuex'
 
 export default {
   layout: 'auth',
-  name: 'login',
+  name: 'register',
 
   data () {
     return {
-      loading: false,
       form: {
+        name: null,
         email: null,
         password: null
       }
     }
   },
   methods: {
-    ...mapActions('login', ['login', 'checktoken']),
+    ...mapActions('login', ['registerUser']),
+    ...mapActions('loader', ['setLoading']),
 
-    sendLogin () {
-      this.loading = true
-      this.login(this.form)
+    callRegisterUser () {
+      this.setLoading(true)
+
+      this.registerUser(this.form)
         .then((res) => {
-          this.$toast.success('Login realizado com sucesso.')
+          this.$toast.success('Cadastro realizado com sucesso.')
 
           this.$router.push({ name: 'dashboard' })
         })
         .catch((error) => {
           this.$toast.error(error.message)
         })
-        .finally(() => {
-          this.loading = false
-        })
+        .finally(() => this.setLoading(false))
     }
   }
 }
