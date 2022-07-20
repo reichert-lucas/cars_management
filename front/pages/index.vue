@@ -11,8 +11,8 @@
           <base-input-validate
             :rules="{ email: true, required: true }"
             type="text"
-            name="login"
-            placeholder="seu login"
+            name="email"
+            placeholder="email de acesso"
             v-model="form.email"
           />
         </div>
