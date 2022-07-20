@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="auth__layout">
     <full-page-loader v-if="loading" />
 
-    <nuxt />
+    <b-container>
+      <nuxt />
+    </b-container>
   </div>
 </template>
 
@@ -33,16 +35,5 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  .position_theme_icon {
-    position: absolute;
-    right: 10rem;
-    top: 2rem;
-  }
-
-  .form__validate__style {
-    max-width: 30rem;
-    width: 25rem;
-  }
 }
 </style>
