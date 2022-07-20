@@ -1,8 +1,10 @@
 export default {
+  ssr: false,
+
   head: {
-    title: 'front',
+    title: 'Cars Management',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'pt-br'
     },
     meta: [
       { charset: 'utf-8' },
@@ -19,6 +21,9 @@ export default {
   ],
 
   plugins: [
+    '~/plugins/mask-directive.js',
+    '~/plugins/toast-notificatios.js',
+    {src: '~/plugins/vee-validate.js', mode: 'client'},
   ],
 
   components: true,
@@ -42,6 +47,9 @@ export default {
   },
 
   build: {
+    transpile: [
+      "vee-validate/dist/rules"
+    ],
   },
 
   server: {
