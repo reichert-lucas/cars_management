@@ -1,11 +1,13 @@
 <template>
   <div>
+    <full-page-loader v-if="loading" />
+
     <nuxt />
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'DefaultLayout',
@@ -14,27 +16,21 @@ export default {
     this.checktoken()
   },
 
-  data () {
-    return {
-
-    }
-  },
-
   methods: {
     ...mapActions('login', ['checktoken', 'signOut']),
 
-    sair(){
+    sair () {
       this.signOut()
         .then((res) => {
-            this.$toast.success('Logout realizado com sucesso.')
-            this.$router.push({path: '/'})
-          })
-          .catch((error) => {
-            this.$toast.error(error.message)
-          })
+          this.$toast.success('Logout realizado com sucesso.')
+          this.$router.push({ path: '/' })
+        })
+        .catch((error) => {
+          this.$toast.error(error.message)
+        })
     },
 
-    closeMenu(){
+    closeMenu () {
       this.drawer = false
       this.miniVariant = false
     }
@@ -46,6 +42,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-</style>
