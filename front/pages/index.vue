@@ -1,39 +1,38 @@
 <template>
-  <div class="w-100 d-flex flex-column justify-center align-center">
-    <h1>Fazer login</h1>
-    <p class="pb-4">Insira suas credenciais abaixo</p>
-
+  <b-card
+    title="Login"
+    class="p-5"
+  >
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
       <form
-        class="form__validate__style w-100"
         @submit.prevent="handleSubmit(sendLogin)"
       >
-        <base-input-validate
-          :rules="{ email: true, required: true }"
-          type="text"
-          name="login"
-          label="seu login"
-          v-model="form.email"
-        />
+        <div class="my-3">
+          <base-input-validate
+            :rules="{ email: true, required: true }"
+            type="text"
+            name="login"
+            placeholder="seu login"
+            v-model="form.email"
+          />
+        </div>
 
-        <base-input-validate
-          rules="required|min:8"
-          type="password"
-          name="senha"
-          label="Sua senha"
-          v-model="form.password"
-        />
+        <div class="my-3">
+          <base-input-validate
+            rules="required|min:8"
+            type="password"
+            name="senha"
+            placeholder="sua senha"
+            v-model="form.password"
+          />
+        </div>
 
-        <nuxt-link to="/auth/forgotPass">
-          <p class="text-center primary--text pb-3">Esqueci minha senha</p>
-        </nuxt-link>
-
-        <button class="btn btn-primary" :disabled="loading" type="submit">
+        <button class="btn btn-warning btn-block mt-3 text-white" :disabled="loading" type="submit">
           Entrar
         </button>
       </form>
     </validation-observer>
-  </div>
+  </b-card>
 </template>
 
 <script>
@@ -41,6 +40,7 @@ import { mapActions } from 'vuex'
 
 export default {
   layout: 'auth',
+  name: 'LoginPage',
 
   data () {
     return {
