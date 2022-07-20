@@ -59,7 +59,8 @@ export default {
       this.login(this.form)
         .then((res) => {
           this.$toast.success('Login realizado com sucesso.')
-          this.$router.push({ name: 'painel' })
+
+          this.$router.push({ name: 'dashboard' })
         })
         .catch((error) => {
           this.$toast.error(error.message)

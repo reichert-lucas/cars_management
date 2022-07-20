@@ -26,6 +26,10 @@ export default {
     {src: '~/plugins/vee-validate.js', mode: 'client'},
   ],
 
+  router: {
+    middleware: 'auth'
+  },
+
   components: true,
 
   buildModules: [

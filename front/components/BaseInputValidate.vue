@@ -5,8 +5,9 @@
       <input :id="id"
         :type="type"
         :placeholder="placeholder"
-        v-model="value"
+        @input="handleInput"
         v-mask="mask"
+        v-model="content"
         class="form-control"
         :class="{'border border-danger': errors[0]}"
       >
@@ -22,7 +23,7 @@ export default {
 
   data () {
     return {
-      value: ''
+      content: this.value
     }
   },
 
@@ -57,6 +58,15 @@ export default {
       type: String,
       description: 'Input label',
       default: null
+    },
+    value: {
+      required: true
+    }
+  },
+
+  methods: {
+    handleInput (e) {
+      this.$emit('input', this.content)
     }
   }
 }
