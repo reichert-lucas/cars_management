@@ -1,0 +1,67 @@
+version: "3.5"
+
+networks: 
+  app-network:
+    driver: bridge
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+
+services:
+  back:
+    container_name: 'cars_management_back'
+    build: ./back
+    ports: 
+      - "8000:8000"
+    volumes:
+      - ./back:/var/www
+    networks: 
+      - app-network
+      - postgres
+    depends_on:
+      - postgres
+
+  front:
+    container_name: 'cars_management_front'
+    build: ./front
+    ports: 
+      - "3000:3000"
+    volumes:
+      - ./front/:/var/www
+    networks: 
+      - app-network
+    depends_on:
+      - back
+
+  postgres:
+    container_name: cars_management_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
