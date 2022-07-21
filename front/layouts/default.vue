@@ -2,7 +2,20 @@
   <div>
     <full-page-loader v-if="loading" />
 
-    <nuxt />
+    <div class="d-flex justify-content-between flex-column">
+      <nav class="nav__container">
+        <nuxt-link :to="{ name: 'dashboard' }">
+          Cars Management
+        </nuxt-link>
+        <div>
+          <a @click="callLogout" class="btn">Sair</a>
+        </div>
+      </nav>
+
+      <nuxt />
+
+      <footer></footer>
+    </div>
   </div>
 </template>
 
@@ -18,22 +31,17 @@ export default {
   },
 
   methods: {
-    ...mapActions('login', ['checktoken', 'signOut']),
+    ...mapActions('login', ['checktoken', 'logout']),
 
-    sair () {
-      this.signOut()
+    callLogout () {
+      this.logout()
         .then((res) => {
           this.$toast.success('Logout realizado com sucesso.')
-          this.$router.push({ path: '/' })
+          this.$router.push({ name: 'index' })
         })
         .catch((error) => {
           this.$toast.error(error.message)
         })
-    },
-
-    closeMenu () {
-      this.drawer = false
-      this.miniVariant = false
     }
   },
 
@@ -43,3 +51,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  nav {
+
+  }
+</style>
