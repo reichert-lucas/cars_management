@@ -19,11 +19,15 @@
           <p>Deixamos alguns atalhos para facilitar o seu trabalho:</p>
 
           <div class="d-flex justify-content-center align-items-center">
-            <nuxt-link to="" class="shortcuts__btn">
+            <nuxt-link :to="{ name: 'dashboard' }" class="shortcuts__btn" :class="{ active: $route.name == 'dashboard' }">
+              dashboard
+            </nuxt-link>
+
+            <nuxt-link :to="{ name: 'dashboard-cars' }" class="shortcuts__btn" :class="{ active: $route.name == 'dashboard-cars' }">
               carros
             </nuxt-link>
 
-            <nuxt-link to="" class="shortcuts__btn">
+            <nuxt-link :to="{ name: 'dashboard-colors' }" class="shortcuts__btn" :class="{ active: $route.name == 'dashboard-colors' }">
               cores
             </nuxt-link>
           </div>
@@ -123,6 +127,12 @@ export default {
     transition: all 0.3s;
 
     &:hover {
+      color: white;
+      background: var(--warning);
+
+    }
+
+    &.active {
       color: white;
       background: var(--warning);
 
