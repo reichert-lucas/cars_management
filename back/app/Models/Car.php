@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Car extends Model
 {
@@ -22,6 +23,16 @@ class Car extends Model
         'color_id',
         'banner'
     ];
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleted(function($car) {
+            if (!is_null($car->banner)) {
+                Storage::disk('public')->delete($car->banner);
+            }
+        });
+    }
 
     static public function search(string $search = null, string $colorId = null)
     {
