@@ -33,7 +33,7 @@ export default {
   components: true,
 
   buildModules: [
-    '@nuxtjs/eslint-module'
+    //'@nuxtjs/eslint-module'
   ],
 
   modules: [
@@ -58,5 +58,9 @@ export default {
 
   server: {
     host: '0.0.0.0',
+  },
+
+  options: {
+    fix: true
   }
 }
