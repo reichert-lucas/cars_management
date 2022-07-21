@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between flex-column">
       <nav class="nav__container">
         <nuxt-link :to="{ name: 'dashboard' }" class="nav__container__title">
-          <b-icon icon="exclamation-circle-fill"></b-icon> Cars Management
+          Cars Management
         </nuxt-link>
         <div class="nav__container__btns">
           <a @click="callLogout" class="nav__container__btns__btn">Sair</a>
