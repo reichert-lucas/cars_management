@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Car\IndexRequest;
 use App\Http\Requests\Api\Car\StoreRequest;
 use App\Http\Requests\Api\Car\UpdateRequest;
 use App\Http\Resources\CarResource;
@@ -12,11 +13,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CarsController extends Controller
 {
-    public function index()
+    public function index(IndexRequest $request)
     {
         return response()->json(
             (new GenericCollection(
-                Car::orderBy('created_at', 'desc')->paginate(8)
+                Car::search($request->search, $request->color_id)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(8)
             ))->setResourceClass(CarResource::class)
         );
     }
