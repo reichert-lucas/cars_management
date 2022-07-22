@@ -2,7 +2,7 @@
     <div>
         <b-button v-b-modal.cars-modal class="btn btn-sm btn-warning text-white">+ adicionar carro</b-button>
 
-        <b-modal id="cars-modal" :title="modalTitle" hide-footer centered>
+        <b-modal id="cars-modal" title="Cadastrar carro" hide-footer centered>
             <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
                 <form @submit.prevent="handleSubmit(callSaveCar)" class="pb-3">
                     <div class="my-3">
@@ -30,7 +30,8 @@
                             rules="required|currencylMin:1"
                             name="preço"
                             placeholder="preço (R$)"
-                            @changed-value="setTransferValue"
+                            :initValue="form.price"
+                            @changed-value="setPriceValue"
                         />
                     </div>
     
@@ -66,8 +67,8 @@
                       </validation-provider>
                     </div>
 
-                    <div class="my-3">
-                      <validation-provider rules="required" name="banner" v-slot="{ errors }">
+                    <div class="my-3 container__image">                      
+                      <validation-provider :rules="{ required: true }" name="banner" v-slot="{ errors }">
                           <b-form-file
                             v-model="form.banner"
                             :state="Boolean(form.banner)"
@@ -84,7 +85,7 @@
                       :disabled="loading"
                       type="submit"
                     >
-                      {{ selectedCar ? "atualizar carro" : "adicionar carro" }}
+                      criar
                     </button>
                 </form>
             </validation-observer>
@@ -97,7 +98,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      form: {
+       form: {
         name: null,
         model: null,
         year: null,
@@ -105,21 +106,17 @@ export default {
         color_id: null,
         banner: null,
         fuel: null,
-      },
+      }
     }
-  },
-
-  props: {
-    selectedCar: {
-      type: Object,
-      required: false,
-      default: null,
-    },
   },
 
   computed: {
     ...mapState('loader', ['loading']),
     ...mapState('colors', ['colors']),
+
+    baseImageUrl() {
+      return `${process.env.NUXT_ENV_URL_API.replace('/api', '')}/storage/`
+    },
 
     colorsOptions() {
       let options = []
@@ -138,19 +135,15 @@ export default {
       })
 
       return options
-    },
-
-    modalTitle() {
-      return this.selectedCar ? `Editar - ${this.selectedCar.name }` : 'Adicionar carro'
     }
   },
 
   methods: {
     ...mapActions('loader', ['setLoading']),
-    ...mapActions('cars', ['loadCars', 'storeCar', 'updateCar', 'destroyCar']),
+    ...mapActions('cars', ['loadCars', 'storeCar', 'destroyCar']),
     ...mapActions('colors', ['loadColors']),
 
-    setTransferValue(value) {
+    setPriceValue(value) {
       this.form.price = value
     },
 
@@ -166,39 +159,9 @@ export default {
       payload.append('banner', this.form.banner)
       payload.append('fuel', this.form.fuel)
 
-      if (this.selectedCar) {
-        this.updateCar({payload, carId: this.selectedCar.id})
-          .then((res) => {
-            this.$toast.success("Carro atualizado com sucesso.")
-
-            this.resetForm()
-            this.reloadCars()
-          })
-          .catch((error) => {
-            this.$toast.error(error.message)
-          })
-          .finally(() => this.setLoading(false))
-      }
-
-      if (!this.selectedCar) {
-        this.storeCar(payload)
-          .then((res) => {
-            this.$toast.success("Carro cadastrado com sucesso.")
-
-            this.resetForm()
-            this.reloadCars()
-          })
-          .catch((error) => {
-            this.$toast.error(error.message)
-          })
-          .finally(() => this.setLoading(false))
-      }
-    },
-
-    callDestroyCar(carId) {
-      this.destroyCar(carId)
+      this.storeCar(payload)
         .then((res) => {
-          this.$toast.success("Carro removido com sucesso.")
+          this.$toast.success("Carro cadastrado com sucesso.")
 
           this.resetForm()
           this.reloadCars()
@@ -207,6 +170,7 @@ export default {
           this.$toast.error(error.message)
         })
         .finally(() => this.setLoading(false))
+      
     },
 
     reloadCars() {
@@ -234,4 +198,16 @@ export default {
   },
 }
 </script>
-<style lang=""></style>
+
+<style lang="scss" scoped>
+  .container__image {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    img {
+      width: 80%;
+      margin-bottom: 8px;
+    }
+  }
+</style>

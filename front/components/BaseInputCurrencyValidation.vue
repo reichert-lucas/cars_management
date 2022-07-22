@@ -57,7 +57,6 @@
         default: ''
       },
       initValue: {
-        type: Number,
         description: 'Initial Value',
         default: 0
       }

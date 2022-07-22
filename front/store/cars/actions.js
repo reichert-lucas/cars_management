@@ -45,9 +45,9 @@ async setPage({ commit, state }, current_page) {
       })
   },
 
-  async updateCar ({ }, data) {
+  async updateCar ({ state }, payload) {
     return await this.$axios
-      .$put(`cars/${data.carId}`, data.payload)
+      .$post(`cars/${state.selectedCar.id}`, payload)
       .catch((error) => {
         return tools.prepareErrorMessasge(error, 'Ocorreu um erro ao atualizar o carro')
       })
@@ -59,5 +59,9 @@ async setPage({ commit, state }, current_page) {
       .catch(error => {
         return tools.prepareErrorMessasge(error, 'Ocorreu um erro ao deletar a cor, verifique se essa cor não está relacionada com nenhum carro')
       })
+  },
+
+  selectCar ({ commit }, car) {
+    commit('SELECT_CAR', JSON.parse(JSON.stringify(car)))
   }
 }
