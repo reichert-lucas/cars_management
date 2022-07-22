@@ -39,14 +39,16 @@ class CarsController extends Controller
     {
         $car->update($request->except('banner'));
 
-        if (!is_null($car->banner)) { 
+        if (!is_null($car->banner) && !is_null($request->banner)) { 
             Storage::disk('public')->delete($car->banner); 
+    
         }
-
-        $path = $request->banner->store("img/cars/{$car->id}", 'public');
-
-        $car->banner = $path;
-        $car->save();
+        if (!is_null($request->file('banner'))) {
+            $path = $request->banner->store("img/cars/{$car->id}", 'public');
+    
+            $car->banner = $path;
+            $car->save();
+        }
 
         return response()->json(new CarResource($car));
     }
