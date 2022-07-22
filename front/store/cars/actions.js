@@ -1,3 +1,5 @@
+import { tools } from '@/directives/functions.js'
+
 export default {
   async loadCars({ commit, state }, filters = {}) {
     var url = `cars`
@@ -19,11 +21,8 @@ export default {
             commit('SET_CARS', response.data)
             commit('UPDATE_PAGINATION', pagination)
         })
-        .catch(err => {
-          console.log(err)
-          return Promise.reject(
-            new Error('Não foi possível carregar os carros')
-          )
+        .catch(error => {
+          return tools.prepareErrorMessasge(error, 'Não foi possível carregar os carros')
         })
 },
 
@@ -42,29 +41,23 @@ async setPage({ commit, state }, current_page) {
     return await this.$axios
       .$post('cars', payload)
       .catch((error) => {
-        return Promise.reject(
-          new Error('Ocorreu um erro ao cadastrar o carro')
-        )
+        return tools.prepareErrorMessasge(error, 'Ocorreu um erro ao cadastrar o carro')
       })
   },
 
-  async updateCar ({ }, payload) {
+  async updateCar ({ }, data) {
     return await this.$axios
-      .$put(`cars/${payload.carId}`, payload)
+      .$put(`cars/${data.carId}`, data.payload)
       .catch((error) => {
-        return Promise.reject(
-          new Error('Ocorreu um erro ao cadastrar o carro')
-        )
+        return tools.prepareErrorMessasge(error, 'Ocorreu um erro ao atualizar o carro')
       })
   },
 
   async destroyCar ({ }, carId) {
     return await this.$axios
       .$delete(`cars/${carId}`)
-      .catch((error) => {
-        return Promise.reject(
-          new Error('Ocorreu um erro ao deletar a cor, verifique se essa cor não está relacionada com nenhum carro')
-        )
+      .catch(error => {
+        return tools.prepareErrorMessasge(error, 'Ocorreu um erro ao deletar a cor, verifique se essa cor não está relacionada com nenhum carro')
       })
   }
 }

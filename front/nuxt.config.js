@@ -23,7 +23,8 @@ export default {
   plugins: [
     '~/plugins/mask-directive.js',
     '~/plugins/toast-notificatios.js',
-    {src: '~/plugins/vee-validate.js', mode: 'client'},
+    { src: '~/plugins/vee-validate.js', mode: 'client' },
+    { src: '~/plugins/v-money.js' }
   ],
 
   router: {
