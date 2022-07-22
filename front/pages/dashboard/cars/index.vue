@@ -33,9 +33,10 @@
             >
               <b-card-text class="container__cars__list__item__informations">
                   <p class="container__cars__list__item__informations__item"><b>Modelo:</b> {{ car.model }}</p>
+                  <p class="container__cars__list__item__informations__item"><b>Ano:</b> {{ car.year }}</p>
                   <p class="container__cars__list__item__informations__item"><b>Preço:</b> {{ car.price.replace('.', ',') }}</p>
                   <p class="container__cars__list__item__informations__item"><b>Combutível:</b> {{ car.fuel }}</p>
-                  <p class="container__cars__list__item__informations__item"><b>Color:</b> {{ car.color.name }}</p>
+                  <p class="container__cars__list__item__informations__item"><b>Cor:</b> {{ car.color.name }}</p>
               </b-card-text>
 
               <b-card-text class="d-flex justify-content-end mt-4">
