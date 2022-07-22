@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CarsController;
+use App\Http\Controllers\Api\CarUpdateLogsController;
 use App\Http\Controllers\Api\ColorsController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('auth/profile', [AuthController::class, 'profile']);
     Route::post('auth/logout', [AuthController::class, 'logout']);
 
+    // Colors
     Route::resource('colors', ColorsController::class);
+
+    // Cars
+    Route::get('cars/logs', [CarUpdateLogsController::class, 'index']);
     Route::resource('cars', CarsController::class);
+    
 });
