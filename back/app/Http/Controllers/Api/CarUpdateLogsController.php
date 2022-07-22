@@ -13,7 +13,7 @@ class CarUpdateLogsController extends Controller
     {
         return response()->json(
             (new GenericCollection(
-                CarUpdateLog::paginate(8)
+                CarUpdateLog::paginate(4)
             ))->setResourceClass(CarUpdateLogResource::class)
         );
     }

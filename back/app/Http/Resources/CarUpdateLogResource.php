@@ -14,7 +14,7 @@ class CarUpdateLogResource extends JsonResource
             'after_update' => $this->after,
             'car_id' => $this->car_id,
             'user' => $this->user,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at->format('d/m/Y H:i')
         ];
     }
 }
