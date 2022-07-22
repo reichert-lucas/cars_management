@@ -6,7 +6,7 @@
       <dashboard-cars-modal-edit v-if="selectedCar" @reset-selected-car="selectCar(null)" />
     </div>
 
-    <div class="d-flex justify-content-center mb-4">
+    <div class="d-flex justify-content-center mb-5">
       <dashboard-cars-search-input :loading="loading" :filters="filters" @call-search="reloadCars" />
     </div>
     
