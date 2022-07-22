@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="cars-modal-edit" title="Editar carro" hide-footer centered>
+  <b-modal id="cars-modal-edit" title="Editar carro" hide-footer centered :key="`model-${selectedCar.id}`">
       <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
           <form @submit.prevent="handleSubmit(callSaveCar)" class="pb-3">
               <div class="my-3">
@@ -128,6 +128,10 @@ export default {
 
       return options
     },
+
+    form() {
+      return JSON.parse(JSON.stringify(this.selectedCar))
+    }
   },
 
   methods: {
@@ -136,7 +140,7 @@ export default {
     ...mapActions('colors', ['loadColors']),
 
     setPriceValue(value) {
-      this.form.price = value
+      this.price = value
     },
 
     callSaveCar() {
@@ -146,7 +150,7 @@ export default {
       payload.append('name', this.form.name)
       payload.append('model', this.form.model)
       payload.append('year', this.form.year)
-      payload.append('price', this.form.price)
+      payload.append('price', this.price)
       payload.append('color_id', this.form.color_id)
       if (this.form.banner) {
         payload.append('banner', this.form.banner)
@@ -180,8 +184,6 @@ export default {
   },
 
   mounted() {
-    this.form = JSON.parse(JSON.stringify(this.selectedCar))
-
     this.loadColors()
   },
 }

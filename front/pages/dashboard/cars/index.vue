@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center mb-5">
       <h4 class="m-0">Lista de carros</h4>
       <dashboard-cars-modal />
-      <dashboard-cars-modal-edit v-if="selectedCar" @reset-selected-car="selectCar(null)" />
+      <dashboard-cars-modal-edit v-if="selectedCar" @reset-selected-car="selectCar(null)" @close="selectCar(null)" />
     </div>
 
     <div class="d-flex justify-content-center mb-5">
